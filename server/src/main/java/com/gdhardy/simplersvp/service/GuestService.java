@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * GuestService
  */
-@Service
+@Service("guestService")
 public class GuestService {
 
   public List<Guest> findAllGuests(){
