@@ -1,10 +1,12 @@
 package com.gdhardy.simplersvp.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Guest
  */
+@Document(collection = "guests")
 public class Guest {
   @Id private String id;
   private String firstName;
