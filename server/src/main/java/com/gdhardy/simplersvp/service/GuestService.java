@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @Service("guestService")
 public class GuestService {
 
+  @Autowired
+  private GuestRepository guestRepository;
+
   public List<Guest> findAllGuests(){
-    ArrayList<Guest> guests = new ArrayList<Guest>();
-    Guest guest = new Guest();
-    guest.setFirstName("James");
-    guests.add(guest);
-    return guests;
+
+    return guestRepository.findAll();
   }
 }
