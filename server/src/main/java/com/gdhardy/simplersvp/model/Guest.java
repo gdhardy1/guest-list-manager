@@ -10,7 +10,7 @@ public class Guest {
   private String firstName;
   private String lastName;
   private String email;
-  private Enum<Rsvp> reply;
+  private Rsvp reply;
   
   public String getId(){
     return id;
@@ -44,10 +44,10 @@ public class Guest {
     this.email = email;
   }
 
-  public Enum<Rsvp> getReply(){
+  public Rsvp getReply(){
     return reply;
   }
-  public void setReply(Enum<Rsvp> reply){
+  public void setReply(Rsvp reply){
     this.reply = reply;
   }
 }
