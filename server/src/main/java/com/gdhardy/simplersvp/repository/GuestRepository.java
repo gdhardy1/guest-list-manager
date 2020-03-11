@@ -15,4 +15,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface GuestRepository extends MongoRepository<Guest, String> {
 
   List<Guest> findAll();
+  <S extends Guest> S save(S guest);
 }
