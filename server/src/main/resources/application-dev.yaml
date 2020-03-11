@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: simplersvp-dev
+      uri: mongodb://localhost/simplersvp-dev
