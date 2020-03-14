@@ -8,3 +8,6 @@ spring:
   profiles:
     default: prod
     active: ${ACTIVE_PROFILE}
+springdoc:
+  api-docs:
+    path: /api/docs
