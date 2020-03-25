@@ -18,12 +18,33 @@ public class GuestService {
   private GuestRepository guestRepository;
 
   public List<Guest> findAllGuests(){
-
     return guestRepository.findAll();
   }
 
   public Guest add(Guest guest) {
-     
     return guestRepository.save(guest);
   }
+
+
+  public Guest findGuest(String email) {
+    return guestRepository.findByEmail(email);
+  }
+
+  public Guest addGuest(Guest guest){
+    return guestRepository.save(guest);
+  }
+
+  public Guest remove(String email){
+    Guest guest = guestRepository.findByEmail(email);
+    guestRepository.delete(guest);
+
+    return guest;
+  }
+
+  public Guest rsvp(String email, Guest reply){
+    Guest guest = guestRepository.findByEmail(email);
+    guest.setReply(reply.getReply());
+    return guestRepository.save(guest);
+  }
+
 }

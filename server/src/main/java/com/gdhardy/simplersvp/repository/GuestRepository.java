@@ -5,6 +5,7 @@ import java.util.List;
 import com.gdhardy.simplersvp.model.Guest;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
@@ -15,5 +16,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface GuestRepository extends MongoRepository<Guest, String> {
 
   List<Guest> findAll();
+  Guest findByEmail(@Param("email") String email);
   <S extends Guest> S save(S guest);
+  void deleteById(String id);
+  <T extends Guest> void delete(T entity);
 }
