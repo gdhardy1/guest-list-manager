@@ -3,6 +3,7 @@ package com.gdhardy.simplersvp.service;
 import java.util.List;
 
 import com.gdhardy.simplersvp.model.Guest;
+import com.gdhardy.simplersvp.model.Reply;
 import com.gdhardy.simplersvp.repository.GuestRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class GuestService {
     return guest;
   }
 
-  public Guest rsvp(String email, Guest reply){
+  public Guest rsvp(String email, Reply reply){
     Guest guest = guestRepository.findByEmail(email);
     guest.setReply(reply.getReply());
     return guestRepository.save(guest);
