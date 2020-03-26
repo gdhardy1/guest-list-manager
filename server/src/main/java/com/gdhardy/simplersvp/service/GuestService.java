@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gdhardy.simplersvp.model.Guest;
 import com.gdhardy.simplersvp.model.Reply;
+import com.gdhardy.simplersvp.model.Rsvp;
 import com.gdhardy.simplersvp.repository.GuestRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class GuestService {
   }
 
   public Guest add(Guest guest) {
+    if (guest.getReply() == null){
+      guest.setReply(Rsvp.valueOf("NO_REPLY"));
+    }
     return guestRepository.save(guest);
   }
 
