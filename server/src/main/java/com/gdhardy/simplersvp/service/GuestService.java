@@ -3,6 +3,8 @@ package com.gdhardy.simplersvp.service;
 import java.util.List;
 
 import com.gdhardy.simplersvp.model.Guest;
+import com.gdhardy.simplersvp.model.NewGuest;
+
 import com.gdhardy.simplersvp.model.Reply;
 import com.gdhardy.simplersvp.model.Rsvp;
 import com.gdhardy.simplersvp.repository.GuestRepository;
@@ -23,10 +25,18 @@ public class GuestService {
     return guestRepository.findAll();
   }
 
-  public Guest add(Guest guest) {
-    if (guest.getReply() == null){
-      guest.setReply(Rsvp.valueOf("NO_REPLY"));
+  public Guest add(NewGuest newGuest) {
+
+    if (newGuest.getReply() == null){
+      newGuest.setReply(Rsvp.valueOf("NO_REPLY"));
     }
+
+    Guest guest = new Guest();
+    guest.setFirstName(newGuest.getFirstName());
+    guest.setLastName(newGuest.getLastName());
+    guest.setEmail(newGuest.getEmail());
+    guest.setReply(newGuest.getReply());
+
     return guestRepository.save(guest);
   }
 

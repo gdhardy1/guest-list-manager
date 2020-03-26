@@ -1,13 +1,16 @@
 package com.gdhardy.simplersvp.model;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * NewGuest
  */
 public class NewGuest {
 
-  private String firstName;
-  private String lastName;
-  private String email;
+  @NotNull(message="First name must be provided.") private String firstName;
+  @NotNull(message="Last name must be provided.") private String lastName;
+  @NotNull(message="Email must be provided.") private String email;
+  private Rsvp reply;
 
 
   public NewGuest(String firstName, String lastName, String email) {
@@ -38,5 +41,13 @@ public class NewGuest {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Rsvp getReply() {
+    return this.reply;
+  }
+
+  public void setReply(Rsvp reply) {
+    this.reply = reply;
   }
 }

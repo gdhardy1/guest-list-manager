@@ -2,9 +2,10 @@ package com.gdhardy.simplersvp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.gdhardy.simplersvp.model.Guest;
 import com.gdhardy.simplersvp.model.NewGuest;
-import com.gdhardy.simplersvp.model.NewGuestReply;
 import com.gdhardy.simplersvp.model.Reply;
 import com.gdhardy.simplersvp.service.GuestService;
 
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
@@ -43,18 +45,11 @@ public class GuestController {
   @PostMapping(value="api/guests", consumes="application/json", produces = "application/json")
   @Operation(summary="Add a guest.", description="Add a guest.")
   public Guest add(
-    @RequestBody(
-      description="Provide first name, last name, email, and optional reply", 
-      required=true, 
-      content=@Content(
-        examples={
-          @ExampleObject(name="Without Reply",value="{\"firstName\": \"string\",\"lastName\": \"string\",\"email\": \"string\"}"), 
-          @ExampleObject(name="With Reply", value="{\"firstName\": \"string\",\"lastName\": \"string\",\"email\": \"string\",\"reply\": \"GOING\"}")
-        }, 
-        schema=@Schema(anyOf = {NewGuest.class, NewGuestReply.class})
-      )
+    @Valid @RequestBody(
+      description="Provide first name, last name, email, and optional reply.", 
+      required=true
     ) 
-    @org.springframework.web.bind.annotation.RequestBody Guest guest
+    @org.springframework.web.bind.annotation.RequestBody NewGuest guest
   ) {
     return guestService.add(guest);
   }
