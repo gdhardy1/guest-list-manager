@@ -1,42 +1,44 @@
 package com.gdhardy.simplersvp.exceptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.gdhardy.simplersvp.controller.GuestController;
-
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * CustomExceptionHandler
  */
-@ControllerAdvice(assignableTypes = GuestController.class)
+@RestControllerAdvice
 public class CustomExceptionHandler {
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ResponseBody
-  public ErrorResponse handleException(MethodArgumentNotValidException ex) {
+  public ResponseEntity<ErrorResponse> handle(MethodArgumentNotValidException ex) {
 
     List<FieldError> errors = ex.getBindingResult().getFieldErrors();
+    ErrorResponse errorResponse = new ErrorResponse();
 
-    List<ErrorDetails> errorDetails = new ArrayList<>();
     for (FieldError fieldError : errors) {
-        ErrorDetails error = new ErrorDetails();
-        error.setFieldName(fieldError.getField());
-        error.setMessage(fieldError.getDefaultMessage());
-        errorDetails.add(error);
+      ErrorDetails error = new ErrorDetails(
+        fieldError.getField() + " field error.",
+        fieldError.getDefaultMessage()
+      );
+      errorResponse.addError(error);
     }
 
-    ErrorResponse errorResponse = new ErrorResponse();
-    errorResponse.setErrors(errorDetails);
+    return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    return errorResponse;
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handle(ResourceNotFoundException ex){
+    ErrorResponse errorResponse = new ErrorResponse();
+    ErrorDetails error = new ErrorDetails(ex.getMessage());
+    errorResponse.addError(error);
+
+    return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.NOT_FOUND);
   }
 }
