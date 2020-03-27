@@ -2,9 +2,16 @@ package com.gdhardy.simplersvp.model;
 
 import javax.validation.constraints.NotNull;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * NewGuest
  */
+@Schema(
+  name = "New Guest", 
+  description = "For creating a new guest.",
+  example = "{\"firstName\":\"Dev\",\"lastName\":\"Example\",\"email\":\"devGuest@dev.com\",\"reply\":\"Going\"}"
+)
 public class NewGuest {
 
   @NotNull(message="First name must be provided.") private String firstName;

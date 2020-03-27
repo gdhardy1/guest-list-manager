@@ -3,10 +3,17 @@ package com.gdhardy.simplersvp.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * Guest
  */
 @Document(collection = "guests")
+@Schema(
+  name="Guest", 
+  description="Guest entity.", 
+  example="{\"id\":\"5e7e159929da9a4a7235c83d\",\"firstName\":\"Dev\",\"lastName\":\"Example\",\"email\":\"devGuest@dev.com\",\"reply\":\"Going\"}"
+)
 public class Guest {
   @Id private String id;
   private String firstName;
