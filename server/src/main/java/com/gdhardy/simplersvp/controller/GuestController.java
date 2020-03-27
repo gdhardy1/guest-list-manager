@@ -70,7 +70,8 @@ public class GuestController {
       responseCode = "400",
       content = @Content(
         examples = {
-          @ExampleObject(value="{\"errors\":[{\"details\":\"email\",\"message\":\"Email must be provided.\"},{\"details\":\"lastName\",\"message\":\"Last name must be provided.\"}]}")
+          @ExampleObject(name="Missing Field", value="{\"errors\":[{\"details\":\"Missing field: email\",\"message\":\"Email must be provided.\"},{\"details\":\"Missing Field: lastName\",\"message\":\"Last name must be provided.\"}]}"),
+          @ExampleObject(name="Missing Request Body", value="{\"errors\":[{\"details\": \"Missing Request Body\",\"message\":\"Required request body is missing.\"}]}")
         },
         schema = @Schema(implementation = ErrorResponse.class)
       )
@@ -136,11 +137,24 @@ public class GuestController {
           implementation = ErrorResponse.class
         )
       )
+    ),
+    @ApiResponse(
+      description = "Bad Request",
+      responseCode = "400",
+      content = @Content(
+        examples = {
+          @ExampleObject(name="Missing Field", value="{\"errors\":[{\"details\":\"Missing field: reply.\",\"message\":\"Must reply 'Going', 'Not Going', or 'No Reply'\"}]}"),
+          @ExampleObject(name="Missing Request Body", value="{\"errors\":[{\"details\": \"Missing field: reply\",\"message\":\"Required request body is missing.\"}]}"),
+          @ExampleObject(name="Invalid Reply", value="{\"errors\":[{\"details\":\"Invalid enumeration provided.\",\"message\":\"Must reply 'Going', 'Not Going', or 'No Reply'\"}]}")
+        },
+        schema = @Schema(implementation = ErrorResponse.class)
+      )
     )
   })
   public ResponseEntity<Void> rsvp(
     @Parameter(description = "Email of guest.") @PathVariable String email, 
-    @Valid @RequestBody @org.springframework.web.bind.annotation.RequestBody Reply reply
+    @Valid @RequestBody(description = "Provide a reply for the RSVP.", required=true) 
+    @org.springframework.web.bind.annotation.RequestBody Reply reply
   ){
     Guest guest =  guestService.rsvp(email, reply);
 
@@ -164,9 +178,9 @@ public class GuestController {
       description = "Guest Not Found",
       responseCode = "404",
       content = @Content(
-        examples = {@ExampleObject(
-          value="{\"errors\":[{\"message\":\"No guest found for email: hello@email.com\"}]}"
-        )},
+        examples = {
+          @ExampleObject(value="{\"errors\":[{\"message\":\"No guest found for email: hello@email.com\"}]}")
+        },
         schema=@Schema(
           implementation = ErrorResponse.class
         )
