@@ -42,7 +42,13 @@ public class GuestService {
 
 
   public Guest findGuest(String email) {
-    return guestRepository.findByEmail(email);
+    Guest guest = guestRepository.findByEmail(email);
+    if(guest == null){
+      // return null entity
+      return new Guest();
+    }
+
+    return guest;
   }
 
   public Guest addGuest(Guest guest){
@@ -51,6 +57,11 @@ public class GuestService {
 
   public Guest remove(String email){
     Guest guest = guestRepository.findByEmail(email);
+
+    if(guest == null){
+      return new Guest();
+    }
+    
     guestRepository.delete(guest);
 
     return guest;
@@ -58,6 +69,11 @@ public class GuestService {
 
   public Guest rsvp(String email, Reply reply){
     Guest guest = guestRepository.findByEmail(email);
+
+    if(guest == null){
+      return new Guest();
+    }
+    
     guest.setReply(reply.getReply());
     return guestRepository.save(guest);
   }
