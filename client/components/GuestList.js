@@ -3,7 +3,7 @@ import Guest from "./Guest";
 import PropTypes from "prop-types";
 
 function GuestList(props) {
-  const { guests } = props;
+  const { guests, setGuestRemoval } = props;
 
   return (
     <table>
@@ -16,7 +16,11 @@ function GuestList(props) {
           <th></th>
         </tr>
         {guests.map(guest => (
-          <Guest key={guest.id} guest={guest} />
+          <Guest
+            key={guest.id}
+            guest={guest}
+            setGuestRemoval={setGuestRemoval}
+          />
         ))}
       </tbody>
     </table>

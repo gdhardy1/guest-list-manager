@@ -4,11 +4,16 @@ import axios from "axios";
 import ErrorService from "../service/ErrorService";
 
 function Guest(props) {
-  const { guest } = props;
+  const { guest, setGuestRemoval } = props;
   const { firstName, lastName, email, reply, id } = guest;
-  const removeGuest = email => {
+  const removeGuest = async email => {
     console.log({ email });
-    axios.delete(`/api/guests/${email}`).catch(ErrorService.handleError);
+    await axios
+      .delete(`/api/guests/${email}`)
+      .then(setGuestRemoval(prev => prev + 1))
+      .catch(ErrorService.handleError);
+  };
+
   };
   return (
     <tr>

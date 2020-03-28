@@ -10,6 +10,8 @@ import ErrorService from "./service/ErrorService";
 function App() {
   const [guests, setGuests] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [formUpdate, setFormUpdate] = useState(0);
+  const [guestRemoval, setGuestRemoval] = useState(0);
 
   useEffect(() => {
     const getGuests = async () =>
@@ -21,15 +23,15 @@ function App() {
         .catch(ErrorService.handleError);
 
     getGuests();
-  }, []);
+  }, [formUpdate, guestRemoval]);
 
   return (
     <div>
-      <GuestList guests={guests} />
+      <GuestList guests={guests} setGuestRemoval={setGuestRemoval} />
       <button className="addGuest" onClick={() => setShowForm(prev => !prev)}>
         {showForm ? "Hide Form" : "New Guest"}
       </button>
-      {showForm && <GuestForm />}
+      {showForm && <GuestForm setFormUpdate={setFormUpdate} />}
     </div>
   );
 }

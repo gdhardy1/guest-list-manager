@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import ErrorService from "../service/ErrorService";
 
-function GuestForm() {
+function GuestForm(props) {
+  const { setFormUpdate } = props;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,8 +18,12 @@ function GuestForm() {
 
     await axios
       .post("/api/guests", guest)
-      .then(res => console.log(res.data))
+      .then(setFormUpdate(prev => prev + 1))
       .catch(ErrorService.handleError);
+
+    setFirstName("");
+    setLastName("");
+    setEmail("");
   };
 
   const handleFormChange = event => {
