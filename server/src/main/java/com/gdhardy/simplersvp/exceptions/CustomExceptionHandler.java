@@ -36,13 +36,22 @@ public class CustomExceptionHandler {
     return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<ErrorResponse> handle(ResourceNotFoundException ex){
+  @ExceptionHandler({ResourceNotFoundException.class, ResourceConflictException.class})
+  public ResponseEntity<ErrorResponse> handle(Exception ex){
+
+    HttpStatus status;
+
     ErrorResponse errorResponse = new ErrorResponse();
     ErrorDetails error = new ErrorDetails(ex.getMessage());
     errorResponse.addError(error);
 
-    return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.NOT_FOUND);
+    if(ex instanceof ResourceNotFoundException){
+      status = HttpStatus.NOT_FOUND;
+    }else{
+      status = HttpStatus.CONFLICT;
+    }
+
+    return new ResponseEntity<ErrorResponse>(errorResponse, status);
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)

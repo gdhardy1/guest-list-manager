@@ -27,6 +27,10 @@ public class GuestService {
 
   public Guest add(NewGuest newGuest) {
 
+    if(guestRepository.findByEmail(newGuest.getEmail()) != null){
+      return new Guest();
+    }
+
     if (newGuest.getReply() == null){
       newGuest.setReply(Rsvp.valueOf("NO_REPLY"));
     }

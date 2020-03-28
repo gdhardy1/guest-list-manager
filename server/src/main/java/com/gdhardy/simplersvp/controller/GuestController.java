@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.gdhardy.simplersvp.exceptions.ErrorResponse;
+import com.gdhardy.simplersvp.exceptions.ResourceConflictException;
 import com.gdhardy.simplersvp.model.Guest;
 import com.gdhardy.simplersvp.model.NewGuest;
 import com.gdhardy.simplersvp.model.Reply;
@@ -60,7 +61,7 @@ public class GuestController {
   @ApiResponses({
     @ApiResponse(
       description = "Added guest",
-      responseCode = "200",
+      responseCode = "201",
       content = @Content(
         schema = @Schema(implementation = Guest.class)
       )
@@ -75,16 +76,32 @@ public class GuestController {
         },
         schema = @Schema(implementation = ErrorResponse.class)
       )
+    ),
+    @ApiResponse(
+      description = "Email Conflict",
+      responseCode = "409",
+      content = @Content(
+        examples = {
+          @ExampleObject(name="Email Conflict", value="{\"errors\":[{\"message\":\"Guest already registered with email: example@email.com\"}]}")
+        },
+        schema = @Schema(implementation = ErrorResponse.class)
+      )
     )
   })
-  public Guest add(
+  public ResponseEntity<Guest> add(
     @Valid @RequestBody(
       description="Provide first name, last name, email, and optional reply.", 
       required=true
     ) 
-    @org.springframework.web.bind.annotation.RequestBody NewGuest guest
-  ) {
-    return guestService.add(guest);
+    @org.springframework.web.bind.annotation.RequestBody NewGuest newGuest
+  ){
+    Guest guest = guestService.add(newGuest);
+
+    if(guest.getId() == null){
+      throw new ResourceConflictException("Guest already registered with email: " + newGuest.getEmail());
+    }
+
+    return new ResponseEntity<Guest>(guest, HttpStatus.CREATED);
   }
 
 
