@@ -1,5 +1,6 @@
 package com.gdhardy.simplersvp.model;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,9 +15,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 )
 public class NewGuest {
 
-  @NotNull(message="First name must be provided.") private String firstName;
-  @NotNull(message="Last name must be provided.") private String lastName;
-  @NotNull(message="Email must be provided.") private String email;
+  @NotNull(message="First name must be provided.")
+  @NotBlank(message = "First name must not be blank.")
+  private String firstName;
+  
+  @NotNull(message="Last name must be provided.")
+  @NotBlank(message = "Last name must not be blank.")
+  private String lastName;
+  
+  @NotNull(message="Email must be provided.")
+  @NotBlank(message = "Email must not be blank.")
+  private String email;
   private Rsvp reply;
 
 
