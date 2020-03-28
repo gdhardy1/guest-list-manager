@@ -144,7 +144,7 @@ public class GuestController {
       content = @Content(
         examples = {
           @ExampleObject(name="Missing Field", value="{\"errors\":[{\"details\":\"Missing field: reply.\",\"message\":\"Must reply 'Going', 'Not Going', or 'No Reply'\"}]}"),
-          @ExampleObject(name="Missing Request Body", value="{\"errors\":[{\"details\": \"Missing field: reply\",\"message\":\"Required request body is missing.\"}]}"),
+          @ExampleObject(name="Missing Request Body", value="{\"errors\":[{\"details\": \"Missing Request Body\",\"message\":\"Required request body is missing.\"}]}"),
           @ExampleObject(name="Invalid Reply", value="{\"errors\":[{\"details\":\"Invalid enumeration provided.\",\"message\":\"Must reply 'Going', 'Not Going', or 'No Reply'\"}]}")
         },
         schema = @Schema(implementation = ErrorResponse.class)
