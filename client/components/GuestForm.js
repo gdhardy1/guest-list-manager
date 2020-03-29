@@ -4,7 +4,7 @@ import axios from "axios";
 import ErrorService from "../service/ErrorService";
 
 function GuestForm(props) {
-  const { setFormUpdate } = props;
+  const { setGuestUpdate } = props;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,12 +18,12 @@ function GuestForm(props) {
 
     await axios
       .post("/api/guests", guest)
-      .then(setFormUpdate(prev => prev + 1))
+      .then(res => {
+        if (res.status === 201) {
+          setGuestUpdate(prev => prev + 1);
+        }
+      })
       .catch(ErrorService.handleError);
-
-    setFirstName("");
-    setLastName("");
-    setEmail("");
   };
 
   const handleFormChange = event => {
@@ -58,7 +58,7 @@ function GuestForm(props) {
         placeholder="Email"
         onChange={handleFormChange}
       />
-      <button className="submit" type="reset" onClick={sendForm}>
+      <button className="submit" type="button" onClick={sendForm}>
         Add Guest
       </button>
     </form>
