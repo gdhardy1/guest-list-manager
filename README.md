@@ -1,6 +1,6 @@
 # Guest List Manager
 
-A fullstack guest list management application built with React and Spring Boot. Check out the [app](https://guest-list-manager.azurewebsites.net/) hosted on Azure. View documentation for the api [here](https://guest-list-manager.azurewebsites.net/swagger-ui.html).
+A fullstack guest list management application built with React and Spring Boot. Check out the [app](https://guest-list-manager.azurewebsites.net/) hosted on Azure. View documentation for the API [here](https://guest-list-manager.azurewebsites.net/swagger-ui.html).
 
 ## About the Project
 
@@ -22,6 +22,6 @@ I used this project to become familiar with API development with Spring Data RES
 
 ### Other
 
-- Embedded MongoDB and Atals Cloud
-- Microsoft Azure Cloud
+- Embedded MongoDB and Atlas Cloud
+- Microsoft Azure
 - JUnit 5
