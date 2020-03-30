@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-
+import PropTypes from "prop-types";
 import axios from "axios";
 import ErrorService from "../service/ErrorService";
+import { Form, FormGroup, TextInput, Button } from "carbon-components-react";
 
 function GuestForm(props) {
   const { setGuestUpdate } = props;
@@ -39,30 +40,33 @@ function GuestForm(props) {
   };
 
   return (
-    <form className="form">
-      <input
+    <Form className="form">
+      <TextInput
         type="text"
         name="firstName"
         placeholder="First Name"
         onChange={handleFormChange}
       />
-      <input
+      <TextInput
         type="text"
         name="lastName"
         placeholder="Last Name"
         onChange={handleFormChange}
       />
-      <input
+      <TextInput
         type="text"
         name="email"
         placeholder="Email"
         onChange={handleFormChange}
       />
-      <button className="submit" type="button" onClick={sendForm}>
+      <Button className="submit" type="button" onClick={sendForm}>
         Add Guest
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 }
 
+GuestForm.propTypes = {
+  setGuestUpdate: PropTypes.func
+};
 export default GuestForm;

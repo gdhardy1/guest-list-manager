@@ -1,12 +1,17 @@
 import "babel-polyfill";
 import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
+import { Button } from "carbon-components-react";
+import styled from "@emotion/styled";
 
 import GuestList from "./components/GuestList";
 import GuestForm from "./components/Guestform";
 import axios from "axios";
 import ErrorService from "./service/ErrorService";
 
+let Title = styled.h1`
+  margin-bottom: 1 rem;
+`;
 function App() {
   const [guests, setGuests] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -27,12 +32,12 @@ function App() {
   return (
     <div>
       <div>
-        <h1 className="title">Guest List Manager</h1>
+        <Title className="title">Guest List Manager</Title>
       </div>
       <div className="form-area">
-        <button className="addGuest" onClick={() => setShowForm(prev => !prev)}>
+        <Button className="addGuest" onClick={() => setShowForm(prev => !prev)}>
           {showForm ? "Hide Form" : "New Guest"}
-        </button>
+        </Button>
         {showForm && <GuestForm setGuestUpdate={setGuestUpdate} />}
       </div>
       <div className="guest-list-area">

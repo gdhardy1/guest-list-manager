@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ErrorService from "../service/ErrorService";
-import Rsvp from "./Rsvp";
+import styled from "@emotion/styled";
+
+import { DataTable, Button, Select, SelectItem } from "carbon-components-react";
+
+const { TableRow, TableCell } = DataTable;
+
+let StyledSelect = styled(Select)`
+  .bx--select {
+    &-input {
+      margin-top: -18px;
+      color: #393939;
+    }
+  }
+`;
 
 function Guest(props) {
-  const { guest, setGuestUpdate } = props;
-  const { firstName, lastName, email, reply, id } = guest;
+  const { row, setGuestUpdate } = props;
 
+  const guest = {
+    firstName: row.cells[0].value,
+    lastName: row.cells[1].value,
+    email: row.cells[2].value,
+    reply: row.cells[3].value
+  };
   const [disabled, setDisabled] = useState(true);
-  const [newReply, setNewReply] = useState(reply);
+  const [newReply, setNewReply] = useState(guest.reply);
+  const input = useRef(null);
 
   const removeGuest = async email => {
     await axios
@@ -44,37 +63,54 @@ function Guest(props) {
   };
 
   return (
-    <tr>
-      <td>{firstName}</td>
-      <td>{lastName}</td>
-      <td>{email}</td>
-      <td>
-        <Rsvp
-          disabled={disabled}
-          setNewReply={setNewReply}
-          newReply={newReply}
-        />
-      </td>
-      <td>
+    <TableRow key={row.id}>
+      {row.cells.map(cell => {
+        if (cell.info.header !== "reply") {
+          return <TableCell key={cell.id}>{cell.value}</TableCell>;
+        } else {
+          return (
+            <TableCell key={cell.id}>
+              <StyledSelect
+                ref={input}
+                id={cell.id}
+                labelText=""
+                value={newReply}
+                onChange={() => setNewReply(input.current.value)}
+                disabled={disabled}
+              >
+                <SelectItem text="Going" value="Going" />
+                <SelectItem text="Not Going" value="Not Going" />
+                <SelectItem text="No Reply" value="No Reply" />
+              </StyledSelect>
+            </TableCell>
+          );
+        }
+      })}
+      <TableCell>
         {disabled ? (
-          <button className="remove" onClick={() => setDisabled(false)}>
+          <Button size="small" onClick={() => setDisabled(false)}>
             Change RSVP
-          </button>
+          </Button>
         ) : (
-          <button className="remove" onClick={() => rsvpGuest(email, newReply)}>
+          <Button size="small" onClick={() => rsvpGuest(guest.email, newReply)}>
             Confirm RSVP
-          </button>
+          </Button>
         )}
-        <button className="remove" onClick={() => removeGuest(email)}>
-          Remove
-        </button>
-      </td>
-    </tr>
+        <Button
+          size="small"
+          kind="danger"
+          onClick={() => removeGuest(guest.email)}
+        >
+          Delete
+        </Button>
+      </TableCell>
+    </TableRow>
   );
 }
 
 Guest.propTypes = {
-  guest: PropTypes.object
+  row: PropTypes.object,
+  setGuestUpdate: PropTypes.func
 };
 
 export default Guest;
