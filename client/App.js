@@ -11,7 +11,7 @@ import ErrorService from "./service/ErrorService";
 
 let AppArea = styled.div`
   margin: auto;
-  max-width: 976px;
+  max-width: 1100px;
   height: 100vh;
 `;
 

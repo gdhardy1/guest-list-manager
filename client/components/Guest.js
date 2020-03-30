@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import ErrorService from "../service/ErrorService";
 import styled from "@emotion/styled";
-import { TrashCan16, Edit16, Save16 } from "@carbon/icons-react";
+import { TrashCan20, Edit20, Save20 } from "@carbon/icons-react";
+import { TooltipIcon } from "carbon-components-react";
 
 import {
   DataTable,
@@ -19,23 +20,42 @@ const { TableRow, TableCell } = DataTable;
 let StyledSelect = styled(Select)`
   .bx--select {
     &-input {
+      max-width: 30px;
       margin-top: -18px;
+      padding-left: 2px;
       color: #393939;
+    }
+
+    &__arrow {
+      transform: translate(0%, -7px);
     }
   }
 `;
 
-let StyledButton = styled(Button)`
-  padding: 8px;
-  margin-left: 3px;
-  margin-right: 3px;
-
-  svg {
-    fill: #ffffff;
+let StyledCell = styled(TableCell)`
+  .bx--form-item {
+    // max-width: 80px;
   }
+`;
 
-  &.save {
-    background-color: #24a148;
+let IconButton = styled(TooltipIcon)`
+  &.bx--tooltip__trigger {
+    margin-left: 3px;
+    margin-right: 3px;
+    padding: 6px;
+    background-color: #0f62fe;
+
+    svg {
+      fill: #ffffff;
+    }
+
+    &.save {
+      background-color: #24a148;
+    }
+
+    &.delete {
+      background-color: #da1e28;
+    }
   }
 `;
 
@@ -91,7 +111,7 @@ function Guest(props) {
           return <TableCell key={cell.id}>{cell.value}</TableCell>;
         } else {
           return (
-            <TableCell key={cell.id}>
+            <StyledCell key={cell.id}>
               <StyledSelect
                 ref={input}
                 id={cell.id}
@@ -104,31 +124,33 @@ function Guest(props) {
                 <SelectItem text="Not Going" value="Not Going" />
                 <SelectItem text="No Reply" value="No Reply" />
               </StyledSelect>
-            </TableCell>
+            </StyledCell>
           );
         }
       })}
       <TableCell>
         {disabled ? (
-          <StyledButton size="small" onClick={() => setDisabled(false)}>
-            <Edit16 aria-label="Edit RSVP" />
-          </StyledButton>
+          <IconButton tooltipText="Edit RVP" onClick={() => setDisabled(false)}>
+            <Edit20 aria-label="Edit RSVP" />
+          </IconButton>
         ) : (
-          <StyledButton
+          <IconButton
+            tooltipText="Confirm RSVP"
             className="save"
             size="small"
             onClick={() => rsvpGuest(guest.email, newReply)}
           >
-            <Save16 aria-label="Confirm RSVP" />
-          </StyledButton>
+            <Save20 aria-label="Confirm RSVP" />
+          </IconButton>
         )}
-        <StyledButton
-          size="small"
-          kind="danger"
+
+        <IconButton
+          tooltipText="Delete Guest"
+          className="delete"
           onClick={() => removeGuest(guest.email)}
         >
-          <TrashCan16 aria-label="Delete" />
-        </StyledButton>
+          <TrashCan20 aria-label="Delete" />
+        </IconButton>
       </TableCell>
     </TableRow>
   );

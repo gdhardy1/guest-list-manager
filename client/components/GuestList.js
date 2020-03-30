@@ -2,7 +2,7 @@ import React from "react";
 import Guest from "./Guest";
 import PropTypes from "prop-types";
 import { iconDownload, iconEdit, iconSettings } from "carbon-icons";
-import { DataTable, Button, Select } from "carbon-components-react";
+import { DataTable, Tooltip } from "carbon-components-react";
 import styled from "@emotion/styled";
 
 const {
@@ -82,7 +82,16 @@ function GuestList(props) {
                     {header.header}
                   </TableHeader>
                 ))}
-                <TableHeader>Actions</TableHeader>
+                <TableHeader>
+                  Actions
+                  <Tooltip direction="bottom" tabIndex={0} triggerText="">
+                    <p>
+                      Click the pen icon to make changes to the RSVP. Click the
+                      save icon to confirm. Click the trash can icon to remove a
+                      guest from the list.
+                    </p>
+                  </Tooltip>
+                </TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
