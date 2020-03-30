@@ -3,6 +3,7 @@ import Guest from "./Guest";
 import PropTypes from "prop-types";
 import { iconDownload, iconEdit, iconSettings } from "carbon-icons";
 import { DataTable, Button, Select } from "carbon-components-react";
+import styled from "@emotion/styled";
 
 const {
   TableContainer,
@@ -20,6 +21,12 @@ const {
   TableToolbarContent,
   TableToolbarAction
 } = DataTable;
+
+let StyledSearch = styled(TableToolbarSearch)`
+  .bx--search-magnifier {
+    transform: translate(0%, -50%);
+  }
+`;
 
 function GuestList(props) {
   const { guests, setGuestUpdate } = props;
@@ -59,7 +66,7 @@ function GuestList(props) {
         <TableContainer>
           <TableToolbar>
             {/* pass in `onInputChange` change here to make filtering work */}
-            <TableToolbarSearch size="xl" onChange={onInputChange} />
+            <StyledSearch size="xl" onChange={onInputChange} />
             {/* <TableToolbarContent>
               <Button size="small" kind="primary">
                 Add new

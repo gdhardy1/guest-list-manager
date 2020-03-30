@@ -3,8 +3,16 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import ErrorService from "../service/ErrorService";
 import styled from "@emotion/styled";
+import { TrashCan16, Edit16, Save16 } from "@carbon/icons-react";
 
-import { DataTable, Button, Select, SelectItem } from "carbon-components-react";
+import {
+  DataTable,
+  Button,
+  Select,
+  SelectItem,
+  OverflowMenu,
+  OverflowMenuItem
+} from "carbon-components-react";
 
 const { TableRow, TableCell } = DataTable;
 
@@ -14,6 +22,20 @@ let StyledSelect = styled(Select)`
       margin-top: -18px;
       color: #393939;
     }
+  }
+`;
+
+let StyledButton = styled(Button)`
+  padding: 8px;
+  margin-left: 3px;
+  margin-right: 3px;
+
+  svg {
+    fill: #ffffff;
+  }
+
+  &.save {
+    background-color: #24a148;
   }
 `;
 
@@ -88,21 +110,25 @@ function Guest(props) {
       })}
       <TableCell>
         {disabled ? (
-          <Button size="small" onClick={() => setDisabled(false)}>
-            Change RSVP
-          </Button>
+          <StyledButton size="small" onClick={() => setDisabled(false)}>
+            <Edit16 aria-label="Edit RSVP" />
+          </StyledButton>
         ) : (
-          <Button size="small" onClick={() => rsvpGuest(guest.email, newReply)}>
-            Confirm RSVP
-          </Button>
+          <StyledButton
+            className="save"
+            size="small"
+            onClick={() => rsvpGuest(guest.email, newReply)}
+          >
+            <Save16 aria-label="Confirm RSVP" />
+          </StyledButton>
         )}
-        <Button
+        <StyledButton
           size="small"
           kind="danger"
           onClick={() => removeGuest(guest.email)}
         >
-          Delete
-        </Button>
+          <TrashCan16 aria-label="Delete" />
+        </StyledButton>
       </TableCell>
     </TableRow>
   );

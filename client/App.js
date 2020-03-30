@@ -9,9 +9,21 @@ import GuestForm from "./components/Guestform";
 import axios from "axios";
 import ErrorService from "./service/ErrorService";
 
-let Title = styled.h1`
-  margin-bottom: 1 rem;
+let AppArea = styled.div`
+  margin: auto;
+  max-width: 976px;
+  height: 100vh;
 `;
+
+let Title = styled.h1`
+  margin-bottom: 1rem;
+`;
+
+let FormArea = styled.div`
+  margin-bottom: 1rem;
+  max-width: 400px;
+`;
+
 function App() {
   const [guests, setGuests] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -30,20 +42,24 @@ function App() {
   }, [guestUpdate]);
 
   return (
-    <div>
+    <AppArea>
       <div>
         <Title className="title">Guest List Manager</Title>
       </div>
-      <div className="form-area">
-        <Button className="addGuest" onClick={() => setShowForm(prev => !prev)}>
+      <FormArea className="form-area">
+        <Button
+          className="addGuest"
+          size="small"
+          onClick={() => setShowForm(prev => !prev)}
+        >
           {showForm ? "Hide Form" : "New Guest"}
         </Button>
         {showForm && <GuestForm setGuestUpdate={setGuestUpdate} />}
-      </div>
+      </FormArea>
       <div className="guest-list-area">
         <GuestList guests={guests} setGuestUpdate={setGuestUpdate} />
       </div>
-    </div>
+    </AppArea>
   );
 }
 
