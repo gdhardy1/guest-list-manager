@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.gdhardy.simplersvp
+web: java -jar server/target/simplersvp-0.0.1-SNAPSHOT.jar
