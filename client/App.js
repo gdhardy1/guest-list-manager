@@ -5,7 +5,7 @@ import { Button } from "carbon-components-react";
 import styled from "@emotion/styled";
 
 import GuestList from "./components/GuestList";
-import GuestForm from "./components/Guestform";
+import GuestForm from "./components/GuestForm";
 import axios from "axios";
 import ErrorService from "./service/ErrorService";
 
