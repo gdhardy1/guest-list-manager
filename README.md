@@ -1,6 +1,6 @@
 # Guest List Manager
 
-A fullstack guest list management application built with React and Spring Boot. Check out the [app](https://guest-list-manager.azurewebsites.net/) hosted on Azure. View documentation for the API [here](https://guest-list-manager.azurewebsites.net/swagger-ui.html).
+A fullstack guest list management application built with React and Spring Boot. Check out the [app](https://fierce-falls-74760.herokuapp.com/) hosted on ~~Azure~~ Heroku\*. View documentation for the API [here](https://fierce-falls-74760.herokuapp.com/swagger-ui.html).
 
 ## About the Project
 
@@ -23,5 +23,10 @@ I used this project to become familiar with API development with Spring Data RES
 ### Other
 
 - Embedded MongoDB and Atlas Cloud
-- Microsoft Azure
+- ~~Microsoft Azure~~ Heroku
 - JUnit 5
+
+<br/>
+<br/>
+
+\*Moved to Heroku because Heroku is free :).
