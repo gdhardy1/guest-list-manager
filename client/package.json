@@ -29,6 +29,6 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "0.0.0-d28bd2994",
     "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.3.12"
   }
 }
